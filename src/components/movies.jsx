@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+
+import { paginate } from "../utils/paginate";
 import { getMovies } from "../services/fakeMovieService";
 import Like from "./common/like";
 import Pagination from "./common/pagination";
-import { paginate } from "../utils/paginate";
 
 class Movies extends Component {
   state = {
@@ -12,9 +13,18 @@ class Movies extends Component {
   };
 
   handleDelete = movie => {
-    this.setState({
-      movies: this.state.movies.filter(m => m._id !== movie._id)
-    });
+    const { movies, pageSize, currentPage } = this.state;
+    const newMovies = movies.filter(m => m._id !== movie._id);
+    if (Math.ceil(newMovies.length / pageSize) < currentPage) {
+      this.setState({
+        currentPage: this.state.currentPage - 1,
+        movies: newMovies
+      });
+    } else {
+      this.setState({
+        movies: newMovies
+      });
+    }
   };
 
   handeLike = movie => {
@@ -27,11 +37,11 @@ class Movies extends Component {
   };
 
   render() {
-    const { movies, pageSize, currentPage } = this.state;
-    const { length: count } = movies;
+    const { movies: allMovies, pageSize, currentPage } = this.state;
+    const { length: count } = allMovies;
     if (count === 0) return <p>There are no movies in the database</p>;
 
-    const moviesPaginate = paginate(movies, currentPage, pageSize);
+    const movies = paginate(allMovies, currentPage, pageSize);
 
     return (
       <React.Fragment>
@@ -48,7 +58,7 @@ class Movies extends Component {
             </tr>
           </thead>
           <tbody>
-            {moviesPaginate.map(movie => (
+            {movies.map(movie => (
               <tr key={movie._id}>
                 <td>{movie.title}</td>
                 <td>{movie.genre.name}</td>

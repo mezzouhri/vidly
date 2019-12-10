@@ -9,7 +9,7 @@ const ListGroup = props => {
     selectedItem
   } = props;
   return (
-    <ul className="list-group">
+    <ul className="list-group clikble">
       {items.map(item => (
         <li
           key={item[valueProperty]}

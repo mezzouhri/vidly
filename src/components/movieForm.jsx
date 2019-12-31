@@ -5,23 +5,26 @@ import { getGenres } from "../services/fakeGenreService";
 
 class MovieForm extends Form {
   state = {
-    data: { title: "", genre: "", numberInStock: "", rate: "" },
+    data: { title: "", genreId: "", numberInStock: "", rate: "" },
+    genres: [],
     errors: {}
   };
 
   componentDidMount() {
-    const data = {};
-    data.genre = getGenres();
-    this.setState({ data });
+    this.setState({ genres: getGenres() });
   }
 
   schema = {
+    _id: Joi.string(),
     title: Joi.string()
       .required()
       .label("Title"),
+    genreId: Joi.string()
+      .required()
+      .label("Genre"),
     numberInStock: Joi.number()
       .min(0)
-      .max(1000)
+      .max(100)
       .required()
       .label("Number in Stock"),
     rate: Joi.number()
@@ -38,38 +41,18 @@ class MovieForm extends Form {
 
   render() {
     const { match, history } = this.props;
-    const { data } = this.state;
+    const { data, genres } = this.state;
     console.log(data.genre);
     return (
       <div>
         <h1>Movie Form {match.params.id}</h1>
         <form onSubmit={this.handleSubmit}>
           {this.renderInput("title", "Title")}
-          {/* <label htmlFor="selectGenre">Genre</label>
-          <select
-            className="custom-select"
-            id="selectGenre"
-            value={this.state.value}
-            onChange={this.handleChange}
-          >
-            {data.genre.map(g => (
-              <option key={g._id} value={g.name}>
-                {g.name}
-              </option>
-            ))}
-          </select> */}
-
+          {this.renderSelect("genreId", "Genre", genres)}
           {this.renderInput("numberInStock", "Number in Stock")}
           {this.renderInput("rate", "Rate")}
           {this.renderButton("Save")}
         </form>
-
-        {/* <button
-          className="btn btn-primary"
-          onClick={() => history.replace("/movies")}
-        >
-          Save
-        </button> */}
       </div>
     );
   }

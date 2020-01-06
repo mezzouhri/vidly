@@ -1,8 +1,8 @@
 import React from "react";
 import Form from "./common/form";
 import Joi from "joi-browser";
-import { getGenres } from "../services/fakeGenreService";
-import { getMovie, saveMovie } from "../services/fakeMovieService";
+import { getGenres } from "../services/genreService";
+import { getMovie, saveMovie } from "../services/movieService";
 
 class MovieForm extends Form {
   state = {
@@ -16,16 +16,18 @@ class MovieForm extends Form {
     errors: {}
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const { match, history } = this.props;
-    this.setState({ genres: getGenres() });
+    const { data: genres } = await getGenres();
+    this.setState({ genres });
 
     const movieId = match.params.id;
     //Case add new Movie
     if (movieId === "new") return;
 
     //Case of a movie already existe or wrong link
-    const movie = getMovie(movieId);
+    //const movie = getMovie(movieId);
+    const { data: movie } = await getMovie(movieId);
 
     //Case of wrong link
     if (!movie) return history.replace("/not-found");

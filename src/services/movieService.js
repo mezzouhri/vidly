@@ -1,16 +1,16 @@
 import http from "./httpService";
 import config from "../config.json";
 
-export async function getMovies() {
-  return await http.get(config.apiMovieEndPoint);
+export function getMovies() {
+  return http.get(config.apiMovieEndPoint);
 }
 
-export async function getMovie(id) {
-  return await http.get(`${config.apiMovieEndPoint}/${id}`);
+export function getMovie(id) {
+  return http.get(`${config.apiMovieEndPoint}/${id}`);
   //return movies.find(m => m._id === id);
 }
 
-export async function saveMovie(movie) {
+export function saveMovie(movie) {
   //     const {data: movies} = await getMovies();
   //     let movieInDb = movies.find(m => m._id === movie._id) || {};
   //     movieInDb.title = movie.title;

@@ -25,7 +25,11 @@ class Movies extends Component {
     const { data } = await getGenres();
     const { data: movies } = await getMovies();
     const genres = [{ _id: "", name: "All Genres" }, ...data];
-    this.setState({ movies, genres });
+    this.setState({
+      movies,
+      genres,
+      selectedGenre: genres[0]
+    });
   }
 
   handleDelete = movie => {

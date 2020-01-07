@@ -1,13 +1,17 @@
 import http from "./httpService";
-import config from "../config.json";
+import { apiUrl } from "../config.json";
 
 export function getMovies() {
-  return http.get(config.apiMovieEndPoint);
+  return http.get(`${apiUrl}/movies`);
 }
 
 export function getMovie(id) {
-  return http.get(`${config.apiMovieEndPoint}/${id}`);
+  return http.get(`${apiUrl}/movies/${id}`);
   //return movies.find(m => m._id === id);
+}
+
+export function deleteMovie(movieId) {
+  return http.delete(`${apiUrl}/movies/${movieId}`);
 }
 
 export function saveMovie(movie) {

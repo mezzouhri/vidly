@@ -73,9 +73,9 @@ class MovieForm extends Form {
       .label("Daily Rental dailyRentalRate")
   };
 
-  doSubmit = () => {
+  doSubmit = async () => {
     //call server
-    saveMovie(this.state.data);
+    await saveMovie(this.state.data);
     this.props.history.goBack();
   };
 

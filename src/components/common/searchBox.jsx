@@ -13,5 +13,3 @@ const SearchBox = ({ value, onChange }) => {
 };
 
 export default SearchBox;
-{
-}

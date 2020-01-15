@@ -8,7 +8,12 @@ class MoviesTable extends Component {
     {
       path: "title",
       label: "Title",
-      content: movie => <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+      content: movie =>
+        this.props.user ? (
+          <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+        ) : (
+          movie.title
+        )
     },
     { path: "genre.name", label: "Genre" },
     { path: "numberInStock", label: "Stock" },

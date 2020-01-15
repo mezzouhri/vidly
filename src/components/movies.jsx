@@ -131,12 +131,15 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link to="/movies/new">
-            <button className="btn btn-primary mb-3">New Movie</button>
-          </Link>
+          {this.props.user && (
+            <Link to="/movies/new">
+              <button className="btn btn-primary mb-3">New Movie</button>
+            </Link>
+          )}
           <p>Showing {count} movies in the database :</p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <MoviesTable
+            user={this.props.user}
             movies={movies}
             sortColumn={sortColumn}
             onLike={this.handleLike}

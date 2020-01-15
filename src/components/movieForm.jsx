@@ -81,8 +81,7 @@ class MovieForm extends Form {
 
   render() {
     const { match } = this.props;
-    const { data, genres } = this.state;
-    console.log(data.genre);
+    const { genres } = this.state;
     return (
       <div>
         <h1>Movie Form {match.params.id}</h1>

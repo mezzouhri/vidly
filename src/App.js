@@ -10,6 +10,7 @@ import NotFound from "./components/notFound";
 import MovieForm from "./components/movieForm";
 import LoginForm from "./components/common/loginForm";
 import RegisterForm from "./components/common/registerForm";
+import ProtectedRoute from "./components/common/protectedRoute";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import { getCurrentUser } from "./services/authService";
@@ -29,7 +30,11 @@ class App extends Component {
         <NavBar user={user} />
         <main className="container">
           <Switch>
-            <Route path="/movies/:id" component={MovieForm} />
+            <ProtectedRoute
+              path="/movies/:id"
+              component={MovieForm}
+              redirectTo="/login"
+            />
             <Route
               path="/movies"
               render={props => <Movies {...props} user={user} />}
